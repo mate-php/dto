@@ -7,6 +7,14 @@
 
 <p align="center">
 
+[![Repo](https://img.shields.io/badge/github-gray?logo=github)](https://packagist.org/packages/matephp/dto)
+[![Latest Stable Version](https://img.shields.io/packagist/v/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![Unstable Version](https://img.shields.io/badge/unstable-dev--main-orange)](https://packagist.org/packages/matephp/dto)
+[![PHP from Packagist](https://img.shields.io/packagist/php-v/matephp/dto.svg?logo=php)](https://packagist.org/packages/matephp/dto)
+[![Total Downloads](https://img.shields.io/packagist/dt/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![License](https://img.shields.io/packagist/l/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![Hits-of-Code](https://hitsofcode.com/github/mate-php/dto?branch=main)](https://hitsofcode.com/github/mate-php/dto/json?branch=main)
+
 </p>
 
 A DTO, or Data Transfer Object, is a design pattern used to transfer data between different layers or subsystems of an application. Its main function is to encapsulate data and minimize the number of calls to the database or other services.

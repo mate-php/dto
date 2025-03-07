@@ -1,6 +1,6 @@
 {
     "name": "matephp/dto",
-    "description": "Mow - Mate PHP Framework",
+    "description": "MatePHP - DTO - Simple Data Transfer Objects (DTO) for any framework",
     "license": "MIT",
     "type": "library",
     "keywords": [

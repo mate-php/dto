@@ -1,5 +1,5 @@
 {
-    "name": "mate/dto",
+    "name": "matephp/dto",
     "description": "Mow - Mate PHP Framework",
     "license": "MIT",
     "type": "library",

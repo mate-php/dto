@@ -70,7 +70,9 @@ final class Property
 
     private function checkAllowsNull(): bool
     {
-        if (!$type = $this->reflectionProperty->getType()) {
+        $type = $this->reflectionProperty->getType();
+
+        if (!$type) {
             // @codeCoverageIgnoreStart
             return true;
             // @codeCoverageIgnoreEnd

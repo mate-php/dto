@@ -6,6 +6,8 @@ namespace Mate\Dto;
 
 interface DtoContract
 {
+    public function __construct(mixed ...$data);
+
     public static function fromArray(array $values);
 
     public static function fromObject(object $values);

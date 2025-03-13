@@ -337,6 +337,14 @@ composer test
 composer test-coverage
 ```
 
+# QA Tools
+
+```sh
+composer phpcs
+composer phpstan
+composer phpmd
+```
+
 # License
 
 MIT license. Please see the [license file](LICENSE) for more information.

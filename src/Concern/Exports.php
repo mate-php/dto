@@ -6,7 +6,7 @@ namespace Mate\Dto\Concern;
 
 use Mate\Dto\Dto;
 
-trait To
+trait Exports
 {
     public function toArray(): array
     {
@@ -31,7 +31,7 @@ trait To
 
     protected function nestedToArray(array $data): array
     {
-        $fn = static function ($value) {
+        $callback = static function ($value) {
             if ($value instanceof Dto) {
                 return $value->toArray();
             }
@@ -39,7 +39,7 @@ trait To
         };
 
         return array_map(
-            $fn,
+            $callback,
             $data
         );
     }

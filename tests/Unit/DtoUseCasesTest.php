@@ -92,4 +92,38 @@ describe('DTOs', function () {
         expect($dto->toArray())
             ->toBe($expected);
     });
+
+
+    test('check all keys', function () {
+        $dto = DtoWithDefaultValueTest::fromArray([
+            'property1' => "value 1",
+            'property2' => "value 2",
+            'property3' => "value 3",
+        ]);
+
+        $expected = [
+            "property1",
+            "property2",
+            "property3",
+        ];
+
+        expect($dto->keys())
+            ->toBe($expected);
+    });
+
+    test('check all values', function () {
+        $dto = DtoWithDefaultValueTest::fromArray([
+            'property1' => "value 1",
+            'property2' => "value 2",
+        ]);
+
+        $expected = [
+            "value 1",
+            "value 2",
+            null
+        ];
+
+        expect($dto->values())
+            ->toBe($expected);
+    });
 });

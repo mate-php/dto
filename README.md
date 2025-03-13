@@ -37,7 +37,7 @@ Some use cases:
 __Via Composer__
 
 ```sh
-composer require mate/dto
+composer require matephp/dto
 ```
 
 # Documentation

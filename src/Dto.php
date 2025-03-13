@@ -8,7 +8,7 @@ use ArrayAccess;
 use Error;
 use JsonSerializable;
 use Mate\Dto\Concern\From;
-use Mate\Dto\Concern\To;
+use Mate\Dto\Concern\Exports;
 use Mate\Dto\Attributes\Flexible;
 use Mate\Dto\Concern\Fill;
 use Mate\Dto\Exceptions\UndefinedPropertyException;
@@ -18,7 +18,7 @@ use Stringable;
 abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializable
 {
     use From;
-    use To;
+    use Exports;
     use Fill;
 
     protected array $dynamic = [];
@@ -68,7 +68,7 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
 
     public function offsetUnset(mixed $property): void
     {
-        throw new Error('Dto are immutable. Create a new DTO to set a new value.');
+        throw new Error('Dto are immutable. Create a new DTO to set a new value: ' . $property);
     }
 
     protected function getPublicValues(): array

@@ -9,10 +9,10 @@ use Error;
 use JsonSerializable;
 use Mate\Dto\Concern\From;
 use Mate\Dto\Concern\Exports;
-use Mate\Dto\Attributes\Flexible;
+use Mate\Dto\Concern\ArrayAccessMethods;
 use Mate\Dto\Concern\Fill;
+use Mate\Dto\Concern\IsFlexible;
 use Mate\Dto\Exceptions\UndefinedPropertyException;
-use ReflectionClass;
 use Stringable;
 
 abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializable
@@ -20,6 +20,8 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
     use From;
     use Exports;
     use Fill;
+    use ArrayAccessMethods;
+    use IsFlexible;
 
     protected array $dynamic = [];
     protected array $validProperties = [];
@@ -50,37 +52,13 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
         throw new Error('Dto are immutable. Create a new DTO to set a new value.');
     }
 
-    public function offsetExists(mixed $property): bool
+    public function keys(): array
     {
-        return $this->__isset($property);
+        return array_keys($this->toArray());
     }
 
-
-    public function offsetGet(mixed $property): mixed
+    public function values(): array
     {
-        return $this->__get($property);
-    }
-
-    public function offsetSet(mixed $property, mixed $value): void
-    {
-        $this->__set($property, $value);
-    }
-
-    public function offsetUnset(mixed $property): void
-    {
-        throw new Error('Dto are immutable. Create a new DTO to set a new value: ' . $property);
-    }
-
-    protected function getPublicValues(): array
-    {
-        $values = get_object_vars($this) + $this->dynamic;
-        return array_intersect_key($values, $this->validProperties);
-    }
-
-    protected function isFlexible(): bool
-    {
-        return ! empty(
-            (new ReflectionClass(static::class))->getAttributes(Flexible::class)
-        );
+        return array_values($this->toArray());
     }
 }

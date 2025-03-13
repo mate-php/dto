@@ -43,4 +43,10 @@ trait Exports
             $data
         );
     }
+
+    protected function getPublicValues(): array
+    {
+        $values = get_object_vars($this) + $this->dynamic;
+        return array_intersect_key($values, $this->validProperties);
+    }
 }

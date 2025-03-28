@@ -2,6 +2,12 @@
 
 use Mate\Dto\Dto;
 
+class DtoToDatabase extends Dto
+{
+    public int $id;
+    public int $clientId;
+}
+
 describe('export', function () {
     test('to array', function () {
         $dto = new DtoTest(
@@ -15,6 +21,21 @@ describe('export', function () {
         ];
 
         expect($dto->toArray())
+            ->toBe($data);
+    });
+
+    test('to database', function () {
+        $dto = new DtoToDatabase(
+            id: 1,
+            clientId: 2,
+        );
+
+        $data = [
+            "id" => 1,
+            "client_id" => 2,
+        ];
+
+        expect($dto->toDatabase())
             ->toBe($data);
     });
 

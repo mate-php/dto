@@ -14,6 +14,20 @@ trait Exports
         return $this->nestedToArray($data);
     }
 
+    public function toDatabase(): array
+    {
+        $toSnakeCase = fn (string $value) => strtolower(
+            preg_replace(['/([a-z\d])([A-Z])/', '/([^_])([A-Z][a-z])/'], '$1_$2', $value)
+        );
+
+        $values = [];
+        foreach ($this->toArray() as $key => $value) {
+            $values[$toSnakeCase($key)] = $value;
+        }
+
+        return $values;
+    }
+
     public function jsonSerialize(): mixed
     {
         return $this->toArray();

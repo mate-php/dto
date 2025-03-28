@@ -299,6 +299,31 @@ echo print_r($dto->toArray, true);
 // )
 ```
 
+__To database__
+
+```php
+// ...
+
+class Client extends Dto
+{
+    public int $id;
+    public int $userId;
+}
+
+$dto = new MyDto(
+    id: 1,
+    userId: 2,
+);
+
+echo print_r($dto->toDatabase, true);
+// print:
+// Array
+// (
+//     [id] => 1
+//     [user_id] => 2
+// )
+```
+
 __To JSON string__
 
 ```php

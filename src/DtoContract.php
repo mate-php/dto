@@ -16,6 +16,8 @@ interface DtoContract
 
     public function toArray(): array;
 
+    public function toDatabase(): array;
+
     public function jsonSerialize(): mixed;
 
     public function toJson(): string;

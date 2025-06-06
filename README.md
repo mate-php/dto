@@ -299,6 +299,19 @@ echo print_r($dto->toArray, true);
 // )
 ```
 
+If you do not need to transform the attributes of the DTO type into an array, you can set it to false.
+
+```php
+
+use Mate\Dto\Dto;
+
+class MyDtoWithoutNestedToArray extends Dto
+{
+    protected bool $nestedToArrayEnabled = false;
+    // ...
+}
+```
+
 __To database__
 
 ```php

@@ -45,9 +45,14 @@ trait Exports
 
     protected function nestedToArray(array $data): array
     {
-        $callback = static function ($value) {
+        $nestedToArrayEnabled = (
+            !isset($this->nestedToArrayEnabled)
+            || (isset($this->nestedToArrayEnabled) && $this->nestedToArrayEnabled === true)
+        ) ? true : false;
+
+        $callback = static function ($value) use ($nestedToArrayEnabled) {
             if ($value instanceof Dto) {
-                return $value->toArray();
+                return $nestedToArrayEnabled ? $value->toArray() : $value;
             }
             return $value;
         };

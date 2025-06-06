@@ -15,6 +15,13 @@ class NestedDtoTest extends Dto
     public DtoTest $dto;
 }
 
+class NestedDto2Test extends Dto
+{
+    public string $property;
+    public DtoTest $dto;
+    protected bool $nestedToArrayEnabled = false;
+}
+
 class NestedStdClassDtoTest extends Dto
 {
     public string $property;
@@ -148,6 +155,28 @@ describe('Build DTO', function () {
         ];
 
         $dto = NestedDtoTest::fromArray($data);
+
+        expect($dto->toArray())
+            ->toBe($expected);
+    });
+
+    test('with nested dtos - without nestedToArrayEnabled', function () {
+        $child = DtoTest::fromArray([
+            "property1" => 'value 1',
+            "property2" => 'value 2',
+        ]);
+
+        $data = [
+            "property" => 'value',
+            "dto" => $child,
+        ];
+
+        $expected = [
+            "property" => 'value',
+            "dto" => $child,
+        ];
+
+        $dto = NestedDto2Test::fromArray($data);
 
         expect($dto->toArray())
             ->toBe($expected);

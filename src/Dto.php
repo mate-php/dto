@@ -25,6 +25,7 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
 
     protected array $dynamic = [];
     protected array $validProperties = [];
+    protected bool $nestedToArrayEnabled = true;
 
     public function __construct(mixed ...$data)
     {

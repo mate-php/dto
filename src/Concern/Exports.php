@@ -66,6 +66,13 @@ trait Exports
     protected function getPublicValues(): array
     {
         $values = get_object_vars($this) + $this->dynamic;
-        return array_intersect_key($values, $this->validProperties);
+
+        foreach ($this->inValidProperties as $inValidProperty) {
+            if (array_key_exists($inValidProperty, $values)) {
+                unset($values[$inValidProperty]);
+            }
+        }
+
+        return $values;
     }
 }

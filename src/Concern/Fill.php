@@ -32,10 +32,7 @@ trait Fill
 
         foreach ($diff as $key => $value) {
             $this->dynamic[$key] = $value;
-            $this->validProperties[$key] = '';
         }
-
-        $this->validProperties = $this->validProperties + array_keys($this->dynamic);
     }
 
     protected function loadConcreteAttributes(array $properties, array $data): void
@@ -50,10 +47,7 @@ trait Fill
                 continue;
             }
 
-            // var_dump($property->getType()->getName());
-
             $this->{$property->getName()} = $value;
-            $this->validProperties[$property->getName()] = '';
         }
     }
 

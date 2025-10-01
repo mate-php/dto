@@ -24,7 +24,9 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
     use IsFlexible;
 
     protected array $dynamic = [];
-    protected array $validProperties = [];
+    protected array $inValidProperties = [
+        'dynamic', 'inValidProperties', 'nestedToArrayEnabled'
+    ];
     protected bool $nestedToArrayEnabled = true;
 
     public function __construct(mixed ...$data)
@@ -34,7 +36,11 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
 
     public function __isset(mixed $property): bool
     {
-        return array_key_exists($property, $this->validProperties);
+        if (in_array($property, $this->inValidProperties)) {
+            return false;
+        }
+
+        return $this->isFlexible() ? true : isset($this->$property);
     }
 
     public function __get(string $property): mixed

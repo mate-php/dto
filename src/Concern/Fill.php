@@ -35,7 +35,7 @@ trait Fill
         }
     }
 
-    protected function loadConcreteAttributes(array $properties, array $data): void
+    protected function loadConcreteAttributes(array $properties, array &$data): void
     {
         /**
          * @var Property $property

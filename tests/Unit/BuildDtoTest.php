@@ -40,6 +40,12 @@ class DtoWithStaticAttributeTest extends Dto
     public string $property2;
 }
 
+class CamelcaseAttributeAttributeTest extends Dto
+{
+    public ?string $lastName = null;
+    public ?string $firstName = null;
+}
+
 describe('Build DTO', function () {
     test('from constructor', function () {
         $dto = new DtoTest(
@@ -225,6 +231,35 @@ describe('Build DTO', function () {
 
         $expected = [
             "property2" => "value 2",
+        ];
+
+        expect($dto->toArray())
+            ->toBe($expected);
+    });
+
+    test('set snakecase', function () {
+        $dto = new CamelcaseAttributeAttributeTest();
+        $dto->lastName = "last name";
+        $dto->first_name = "first name";
+
+        $expected = [
+            "lastName" => "last name",
+            "firstName" => "first name",
+        ];
+
+        expect($dto->toArray())
+            ->toBe($expected);
+    });
+
+    test('fill set snakecase', function () {
+        $dto = new CamelcaseAttributeAttributeTest(...[
+            "lastName" => "last name",
+            "first_name" => "first name"
+        ]);
+
+        $expected = [
+            "lastName" => "last name",
+            "firstName" => "first name",
         ];
 
         expect($dto->toArray())

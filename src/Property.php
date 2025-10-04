@@ -86,9 +86,16 @@ final class Property
         return $this->reflectionProperty->getType();
     }
 
-    public function getValueFromData(array $data): mixed
+    public function getValueFromData(array &$data): mixed
     {
         if (array_key_exists($this->name, $data)) {
+            return $data[$this->name];
+        }
+
+        $snakeCase = strtolower(preg_replace('/(?<!^)[A-Z]/', '_$0', $this->name));
+        if (array_key_exists($snakeCase, $data)) {
+            $data[$this->name] = $data[$snakeCase];
+            unset($data[$snakeCase]);
             return $data[$this->name];
         }
 

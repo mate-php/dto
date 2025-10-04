@@ -56,6 +56,14 @@ abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializ
 
     public function __set(string $property, mixed $value): void
     {
+        $camelCaseProperty = str_replace(["-", "_"], " ", $property);
+        $camelCaseProperty = lcfirst(ucwords($camelCaseProperty));
+        $camelCaseProperty = str_replace(" ", "", $camelCaseProperty);
+        if (property_exists($this, $camelCaseProperty)) {
+            $this->$camelCaseProperty = $value;
+            return;
+        }
+
         throw new Error('Dto are immutable. Create a new DTO to set a new value.');
     }
 

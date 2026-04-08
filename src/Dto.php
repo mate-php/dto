@@ -4,76 +4,81 @@ declare(strict_types=1);
 
 namespace Mate\Dto;
 
-use ArrayAccess;
-use Error;
-use JsonSerializable;
-use Mate\Dto\Concern\From;
-use Mate\Dto\Concern\Exports;
-use Mate\Dto\Concern\ArrayAccessMethods;
-use Mate\Dto\Concern\Fill;
-use Mate\Dto\Concern\IsFlexible;
-use Mate\Dto\Exceptions\UndefinedPropertyException;
-use Stringable;
+use Mate\Dto\Contracts\DTOInterface;
+use Mate\Dto\Support\MetadataRegistry;
+use Mate\Dto\Traits\Exportable;
+use Mate\Dto\Traits\Instantiable;
 
-abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializable
+/**
+ * Class AbstractDto
+ * Base class for all Data Transfer Objects.
+ */
+abstract class Dto implements DTOInterface
 {
-    use From;
-    use Exports;
-    use Fill;
-    use ArrayAccessMethods;
-    use IsFlexible;
+    use Instantiable;
+    use Exportable;
 
-    protected array $dynamic = [];
-    protected array $inValidProperties = [
-        'dynamic', 'inValidProperties', 'nestedToArrayEnabled'
-    ];
-    protected bool $nestedToArrayEnabled = true;
-
-    public function __construct(mixed ...$data)
+    public function __construct(array $data = [])
     {
-        $this->fill($data);
+        if (!empty($data)) {
+            $this->populate($data);
+        }
     }
 
-    public function __isset(mixed $property): bool
+    protected function populate(array $data): void
     {
-        if (in_array($property, $this->inValidProperties)) {
-            return false;
+        $properties = MetadataRegistry::getProperties(static::class);
+        $tempDto = static::fromArray($data);
+
+        foreach ($properties as $metadata) {
+            if ($metadata->reflection->isInitialized($tempDto)) {
+                $metadata->reflection->setValue($this, $metadata->reflection->getValue($tempDto));
+            }
+        }
+    }
+
+    public function __get(string $name): mixed
+    {
+        if (property_exists($this, $name)) {
+            return $this->{$name};
         }
 
-        return $this->isFlexible() ? true : isset($this->$property);
+        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
-    public function __get(string $property): mixed
+    public function __set(string $name, mixed $value): void
     {
-        if (!$this->__isset($property)) {
-            throw new UndefinedPropertyException($property);
-        }
-
-        return array_key_exists($property, $this->dynamic)
-            ? $this->dynamic[$property]
-            : $this->$property;
-    }
-
-    public function __set(string $property, mixed $value): void
-    {
-        $camelCaseProperty = str_replace(["-", "_"], " ", $property);
-        $camelCaseProperty = lcfirst(ucwords($camelCaseProperty));
-        $camelCaseProperty = str_replace(" ", "", $camelCaseProperty);
-        if (property_exists($this, $camelCaseProperty)) {
-            $this->$camelCaseProperty = $value;
+        if (property_exists($this, $name)) {
+            $this->{$name} = $value;
             return;
         }
 
-        throw new Error('Dto are immutable. Create a new DTO to set a new value.');
+        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
-    public function keys(): array
+    // ArrayAccess implementation
+    public function offsetExists(mixed $offset): bool
     {
-        return array_keys($this->toArray());
+        return property_exists($this, (string) $offset);
     }
 
-    public function values(): array
+    public function offsetGet(mixed $offset): mixed
     {
-        return array_values($this->toArray());
+        return $this->__get((string) $offset);
+    }
+
+    public function offsetSet(mixed $offset, mixed $value): void
+    {
+        $this->__set((string) $offset, $value);
+    }
+
+    public function offsetUnset(mixed $offset): void
+    {
+        throw new \BadMethodCallException("Unsetting DTO properties is not allowed.");
+    }
+
+    public function __toString(): string
+    {
+        return $this->toJson();
     }
 }

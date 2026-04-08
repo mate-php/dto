@@ -52,12 +52,18 @@ abstract class Dto implements DTOInterface
     public function offsetSet(mixed $offset, mixed $value): void
     {
         $name = (string) $offset;
-        if (property_exists($this, $name)) {
-            $this->{$name} = $value;
-            return;
+        try {
+            $reflection = new \ReflectionProperty($this, $name);
+            $reflection->setValue($this, $value);
+        } catch (\ReflectionException $e) {
+            throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class, 0, $e);
+        } catch (\TypeError $e) {
+            throw new \Mate\Dto\Exceptions\InvalidDataException(
+                sprintf('Invalid type for property %s in %s: %s', $name, static::class, $e->getMessage()),
+                0,
+                $e
+            );
         }
-
-        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
     public function offsetUnset(mixed $offset): void

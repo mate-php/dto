@@ -31,6 +31,11 @@ interface DTOInterface extends \JsonSerializable, \ArrayAccess, \Stringable
     public static function fromDto(DTOInterface $dto): static;
 
     /**
+     * Fills the DTO with the given array data.
+     */
+    public function fill(array $data): static;
+
+    /**
      * Exports the DTO to an array.
      */
     public function toArray(): array;

@@ -24,7 +24,7 @@ trait Instantiable
         return $dto;
     }
 
-    protected function fill(array $data): void
+    public function fill(array $data): static
     {
         $properties = MetadataRegistry::getProperties(static::class);
         $reflection = new \ReflectionClass(static::class);
@@ -91,6 +91,8 @@ trait Instantiable
                 );
             }
         }
+
+        return $this;
     }
 
     public static function fromObject(object $data): static

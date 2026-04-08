@@ -5,7 +5,6 @@ declare(strict_types=1);
 namespace Mate\Dto;
 
 use Mate\Dto\Contracts\DTOInterface;
-use Mate\Dto\Support\MetadataRegistry;
 use Mate\Dto\Traits\Exportable;
 use Mate\Dto\Traits\Instantiable;
 
@@ -27,33 +26,7 @@ abstract class Dto implements DTOInterface
 
     protected function populate(array $data): void
     {
-        $properties = MetadataRegistry::getProperties(static::class);
-        $tempDto = static::fromArray($data);
-
-        foreach ($properties as $metadata) {
-            if ($metadata->reflection->isInitialized($tempDto)) {
-                $metadata->reflection->setValue($this, $metadata->reflection->getValue($tempDto));
-            }
-        }
-    }
-
-    public function __get(string $name): mixed
-    {
-        if (property_exists($this, $name)) {
-            return $this->{$name};
-        }
-
-        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
-    }
-
-    public function __set(string $name, mixed $value): void
-    {
-        if (property_exists($this, $name)) {
-            $this->{$name} = $value;
-            return;
-        }
-
-        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
+        $this->fill($data);
     }
 
     // ArrayAccess implementation
@@ -64,12 +37,23 @@ abstract class Dto implements DTOInterface
 
     public function offsetGet(mixed $offset): mixed
     {
-        return $this->__get((string) $offset);
+        $name = (string) $offset;
+        if (property_exists($this, $name)) {
+            return $this->{$name};
+        }
+
+        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
     public function offsetSet(mixed $offset, mixed $value): void
     {
-        $this->__set((string) $offset, $value);
+        $name = (string) $offset;
+        if (property_exists($this, $name)) {
+            $this->{$name} = $value;
+            return;
+        }
+
+        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
     public function offsetUnset(mixed $offset): void

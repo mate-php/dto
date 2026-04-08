@@ -16,9 +16,17 @@ trait Instantiable
 {
     public static function fromArray(array $data): static
     {
-        $properties = MetadataRegistry::getProperties(static::class);
-        $reflection = new ReflectionClass(static::class);
+        $reflection = new \ReflectionClass(static::class);
         $dto = $reflection->newInstanceWithoutConstructor();
+
+        $dto->fill($data);
+
+        return $dto;
+    }
+
+    protected function fill(array $data): void
+    {
+        $properties = MetadataRegistry::getProperties(static::class);
 
         foreach ($properties as $metadata) {
             $value = $data[$metadata->inputName] ?? $data[$metadata->name] ?? null;
@@ -57,19 +65,15 @@ trait Instantiable
             }
 
             try {
-                $metadata->reflection->setValue($dto, $value);
+                $metadata->reflection->setValue($this, $value);
             } catch (\TypeError $e) {
                 // If it's a type error and we want to be graceful, we could skip or throw a specific exception.
-                // For now, let's skip to keep existing default values if possible, 
-                // but only if the property was not initialized.
-                if (!$metadata->reflection->isInitialized($dto)) {
+                if (!$metadata->reflection->isInitialized($this)) {
                     continue;
                 }
                 throw $e;
             }
         }
-
-        return $dto;
     }
 
     public static function fromObject(object $data): static

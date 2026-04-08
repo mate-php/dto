@@ -27,6 +27,24 @@ trait Instantiable
     protected function fill(array $data): void
     {
         $properties = MetadataRegistry::getProperties(static::class);
+        $reflection = new \ReflectionClass(static::class);
+        $flexibleAttribute = $reflection->getAttributes(\Mate\Dto\Attributes\Flexible::class)[0] ?? null;
+        $isFlexible = $flexibleAttribute ? $flexibleAttribute->newInstance()->enabled : true;
+
+        if (!$isFlexible) {
+            $allowedKeys = array_map(
+                static fn($metadata) => [$metadata->name, $metadata->inputName],
+                $properties
+            );
+            $allowedKeys = array_merge(...array_values($allowedKeys));
+            $unknownKeys = array_diff(array_keys($data), $allowedKeys);
+
+            if (!empty($unknownKeys)) {
+                throw new \Mate\Dto\Exceptions\NotFlexibleException(
+                    sprintf('Unknown properties [%s] passed to non-flexible DTO %s', implode(', ', $unknownKeys), static::class)
+                );
+            }
+        }
 
         foreach ($properties as $metadata) {
             $value = $data[$metadata->inputName] ?? $data[$metadata->name] ?? null;
@@ -59,7 +77,6 @@ trait Instantiable
                         );
                     }
                 } else {
-                    // Skip assignment if collection expected an array but got something else
                     continue;
                 }
             }
@@ -67,11 +84,11 @@ trait Instantiable
             try {
                 $metadata->reflection->setValue($this, $value);
             } catch (\TypeError $e) {
-                // If it's a type error and we want to be graceful, we could skip or throw a specific exception.
-                if (!$metadata->reflection->isInitialized($this)) {
-                    continue;
-                }
-                throw $e;
+                throw new \Mate\Dto\Exceptions\InvalidDataException(
+                    sprintf('Invalid type for property %s in %s: %s', $metadata->name, static::class, $e->getMessage()),
+                    0,
+                    $e
+                );
             }
         }
     }

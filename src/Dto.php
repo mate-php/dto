@@ -9,8 +9,12 @@ use Mate\Dto\Traits\Exportable;
 use Mate\Dto\Traits\Instantiable;
 
 /**
- * Class AbstractDto
+ * Class Dto
  * Base class for all Data Transfer Objects.
+ * 
+ * In PHP 8.4+, it is recommended to use Asymmetric Visibility for properties:
+ * @example
+ * public private(set) string $name;
  */
 abstract class Dto implements DTOInterface
 {

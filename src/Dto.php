@@ -4,76 +4,81 @@ declare(strict_types=1);
 
 namespace Mate\Dto;
 
-use ArrayAccess;
-use Error;
-use JsonSerializable;
-use Mate\Dto\Concern\From;
-use Mate\Dto\Concern\Exports;
-use Mate\Dto\Concern\ArrayAccessMethods;
-use Mate\Dto\Concern\Fill;
-use Mate\Dto\Concern\IsFlexible;
-use Mate\Dto\Exceptions\UndefinedPropertyException;
-use Stringable;
+use Mate\Dto\Contracts\DTOInterface;
+use Mate\Dto\Traits\Exportable;
+use Mate\Dto\Traits\Instantiable;
 
-abstract class Dto implements DtoContract, ArrayAccess, Stringable, JsonSerializable
+/**
+ * Class Dto
+ * Base class for all Data Transfer Objects.
+ *
+ * In PHP 8.4+, it is recommended to use Asymmetric Visibility for properties:
+ * @example
+ * public private(set) string $name;
+ */
+abstract class Dto implements DTOInterface
 {
-    use From;
-    use Exports;
-    use Fill;
-    use ArrayAccessMethods;
-    use IsFlexible;
+    use Instantiable;
+    use Exportable;
 
-    protected array $dynamic = [];
-    protected array $inValidProperties = [
-        'dynamic', 'inValidProperties', 'nestedToArrayEnabled'
-    ];
-    protected bool $nestedToArrayEnabled = true;
+    /**
+     * @param array<string, mixed> $data
+     */
+    public function __construct(array $data = [])
+    {
+        if (!empty($data)) {
+            $this->populate($data);
+        }
+    }
 
-    public function __construct(mixed ...$data)
+    /**
+     * @param array<string, mixed> $data
+     */
+    protected function populate(array $data): void
     {
         $this->fill($data);
     }
 
-    public function __isset(mixed $property): bool
+    // ArrayAccess implementation
+    public function offsetExists(mixed $offset): bool
     {
-        if (in_array($property, $this->inValidProperties)) {
-            return false;
+        return property_exists($this, (string) $offset);
+    }
+
+    public function offsetGet(mixed $offset): mixed
+    {
+        $name = (string) $offset;
+        if (property_exists($this, $name)) {
+            return $this->{$name};
         }
 
-        return $this->isFlexible() ? true : isset($this->$property);
+        throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class);
     }
 
-    public function __get(string $property): mixed
+    public function offsetSet(mixed $offset, mixed $value): void
     {
-        if (!$this->__isset($property)) {
-            throw new UndefinedPropertyException($property);
+        $name = (string) $offset;
+        try {
+            $reflection = new \ReflectionProperty($this, $name);
+            $reflection->setValue($this, $value);
+        } catch (\ReflectionException $e) {
+            throw new \InvalidArgumentException("Property {$name} does not exist on " . static::class, 0, $e);
+        } catch (\TypeError $e) {
+            throw new \Mate\Dto\Exceptions\InvalidDataException(
+                sprintf('Invalid type for property %s in %s: %s', $name, static::class, $e->getMessage()),
+                0,
+                $e
+            );
         }
-
-        return array_key_exists($property, $this->dynamic)
-            ? $this->dynamic[$property]
-            : $this->$property;
     }
 
-    public function __set(string $property, mixed $value): void
+    public function offsetUnset(mixed $offset): void
     {
-        $camelCaseProperty = str_replace(["-", "_"], " ", $property);
-        $camelCaseProperty = lcfirst(ucwords($camelCaseProperty));
-        $camelCaseProperty = str_replace(" ", "", $camelCaseProperty);
-        if (property_exists($this, $camelCaseProperty)) {
-            $this->$camelCaseProperty = $value;
-            return;
-        }
-
-        throw new Error('Dto are immutable. Create a new DTO to set a new value.');
+        throw new \BadMethodCallException("Unsetting DTO properties is not allowed.");
     }
 
-    public function keys(): array
+    public function __toString(): string
     {
-        return array_keys($this->toArray());
-    }
-
-    public function values(): array
-    {
-        return array_values($this->toArray());
+        return $this->toJson();
     }
 }

@@ -7,6 +7,4 @@ namespace Mate\Dto\Exceptions;
 /**
  * Thrown for type mismatches or mapping failures.
  */
-class InvalidDataException extends DtoException
-{
-}
+class InvalidDataException extends DtoException {}

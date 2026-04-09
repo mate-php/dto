@@ -7,6 +7,4 @@ namespace Mate\Dto\Exceptions;
 /**
  * Thrown when unknown properties are passed to a non-flexible DTO.
  */
-class NotFlexibleException extends DtoException
-{
-}
+class NotFlexibleException extends DtoException {}

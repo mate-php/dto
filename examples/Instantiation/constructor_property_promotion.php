@@ -12,8 +12,7 @@ class UserDto extends Dto
         public string $firstName,
         public string $lastName,
         public string $email,
-    ) {
-    }
+    ) {}
 }
 
 $dto = new UserDto(

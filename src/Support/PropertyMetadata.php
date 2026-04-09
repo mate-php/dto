@@ -24,6 +24,5 @@ final readonly class PropertyMetadata
         public ReflectionProperty $reflection,
         public bool $hasDefault = false,
         public mixed $defaultValue = null
-    ) {
-    }
+    ) {}
 }

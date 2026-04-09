@@ -26,10 +26,10 @@ test('helper toCamelCase converts correctly', function () {
 test('metadata registry can clear cache', function () {
     // Fill cache
     MetadataRegistry::getProperties(SimpleDto::class);
-    
+
     // Clear cache
     MetadataRegistry::clear();
-    
+
     // We can't easily check the private static cache directly without reflection,
     // but we can verify the method exists and runs without error.
     expect(fn() => MetadataRegistry::clear())->not->toThrow(\Throwable::class);

@@ -15,6 +15,5 @@ readonly class MapInputName
 {
     public function __construct(
         public string $name
-    ) {
-    }
+    ) {}
 }

@@ -28,19 +28,19 @@ class TypeStrictDto extends Dto
 test('flexible dto ignores unknown data by default', function () {
     $data = ['name' => 'John', 'unknown' => 'value'];
     $dto = new FlexibleDto($data);
-    
+
     expect($dto->name)->toBe('John');
 });
 
 test('strict dto throws exception on unknown data', function () {
     $data = ['name' => 'John', 'unknown' => 'value'];
-    
+
     expect(fn() => new StrictDto($data))->toThrow(NotFlexibleException::class);
 });
 
 test('dto throws invalid data exception on type mismatch', function () {
     $data = ['age' => 'not an int'];
-    
+
     expect(fn() => new TypeStrictDto($data))->toThrow(InvalidDataException::class);
 });
 

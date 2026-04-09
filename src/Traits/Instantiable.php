@@ -14,6 +14,9 @@ use ReflectionClass;
  */
 trait Instantiable
 {
+    /**
+     * @param array<string, mixed> $data
+     */
     public static function fromArray(array $data): static
     {
         $reflection = new \ReflectionClass(static::class);

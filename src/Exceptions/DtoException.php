@@ -9,6 +9,4 @@ use RuntimeException;
 /**
  * Base exception for the Mate DTO library.
  */
-class DtoException extends RuntimeException
-{
-}
+class DtoException extends RuntimeException {}

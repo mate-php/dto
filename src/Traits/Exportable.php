@@ -27,6 +27,9 @@ trait Exportable
         return $value;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toArray(): array
     {
         $result = [];
@@ -41,6 +44,9 @@ trait Exportable
         return $result;
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function toDatabase(): array
     {
         $result = [];
@@ -60,6 +66,9 @@ trait Exportable
         return json_encode($this, JSON_THROW_ON_ERROR | JSON_UNESCAPED_SLASHES);
     }
 
+    /**
+     * @return array<string, mixed>
+     */
     public function jsonSerialize(): array
     {
         return $this->toArray();

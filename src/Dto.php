@@ -11,7 +11,7 @@ use Mate\Dto\Traits\Instantiable;
 /**
  * Class Dto
  * Base class for all Data Transfer Objects.
- * 
+ *
  * In PHP 8.4+, it is recommended to use Asymmetric Visibility for properties:
  * @example
  * public private(set) string $name;
@@ -21,6 +21,9 @@ abstract class Dto implements DTOInterface
     use Instantiable;
     use Exportable;
 
+    /**
+     * @param array<string, mixed> $data
+     */
     public function __construct(array $data = [])
     {
         if (!empty($data)) {
@@ -28,6 +31,9 @@ abstract class Dto implements DTOInterface
         }
     }
 
+    /**
+     * @param array<string, mixed> $data
+     */
     protected function populate(array $data): void
     {
         $this->fill($data);

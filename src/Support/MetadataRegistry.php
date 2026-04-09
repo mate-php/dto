@@ -16,6 +16,7 @@ use Mate\Dto\Attributes\Collection;
  */
 final class MetadataRegistry
 {
+    /** @var array<string, array<string, PropertyMetadata>> */
     private static array $cache = [];
 
     /**
@@ -88,5 +89,3 @@ final class MetadataRegistry
         self::$cache = [];
     }
 }
-
-

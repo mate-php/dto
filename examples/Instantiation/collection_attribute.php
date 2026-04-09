@@ -28,8 +28,8 @@ $data = [
     "email" => "john.doe@example.com",
     "roles" => [
         ['name' => 'Admin'],
-        ['name' => 'Editor']
-    ]
+        ['name' => 'Editor'],
+    ],
 ];
 $dto = new UserDto($data);
 print_r($dto);

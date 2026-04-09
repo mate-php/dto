@@ -8,16 +8,16 @@
   <strong>High-performance, modern and framework-agnostic DTO library for PHP 8.4+.</strong>
 </p>
 
-<p align="center">
-  <a href="https://github.com/mate-php/dto"><img src="https://img.shields.io/badge/github-gray?logo=github" alt="Repo"></a>
-  <a href="https://packagist.org/packages/matephp/dto"><img src="https://img.shields.io/packagist/v/matephp/dto" alt="Latest Stable Version"></a>
-  <a href="https://packagist.org/packages/matephp/dto"><img src="https://img.shields.io/badge/unstable-dev--main-orange" alt="Unstable Version"></a>
-  <a href="composer.json"><img src="https://img.shields.io/badge/php-8.4%2B-indigo.svg" alt="PHP Version"></a>
-  <a href="https://packagist.org/packages/matephp/dto"><img src="https://img.shields.io/packagist/dt/matephp/dto" alt="Total Downloads"></a>
-  <a href="LICENSE"><img src="https://img.shields.io/packagist/l/matephp/dto" alt="License"></a>
-  <a href="https://hitsofcode.com/github/mate-php/dto?branch=main"><img src="https://hitsofcode.com/github/mate-php/dto?branch=main" alt="Hits-of-Code"></a>
-  <a href="tests/"><img src="https://img.shields.io/badge/coverage-100%25-green.svg" alt="Coverage"></a>
-</p>
+
+[![Repo](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/mate-php/dto)
+[![Latest Stable Version](https://img.shields.io/packagist/v/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![Unstable Version](https://img.shields.io/badge/unstable-dev--main-orange)](https://github.com/mate-php/dto)
+[![PHP Version](https://img.shields.io/badge/php-8.4%2B-indigo.svg)](https://github.com/mate-php/dto/blob/main/composer.json)
+[![Total Downloads](https://img.shields.io/packagist/dt/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![License](https://img.shields.io/packagist/l/matephp/dto)](https://github.com/mate-php/dto/blob/main/LICENSE)
+[![Hits-of-Code](https://hitsofcode.com/github/mate-php/dto?branch=main)](https://hitsofcode.com/github/mate-php/dto/json?branch=main)
+[![Coverage](https://img.shields.io/badge/coverage-100%25-green.svg)](https://github.com/mate-php/dto/tree/main/tests)
+
 
 ---
 

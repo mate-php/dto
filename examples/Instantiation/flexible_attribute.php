@@ -19,7 +19,7 @@ $data = [
     "firstName" => "John",
     "lastName" => "Doe",
     "email" => "john.doe@example.com",
-    "key" => "value"
+    "key" => "value",
 ];
 $dto = new UserDto($data);
 print_r($dto->toArray()); // throw exception

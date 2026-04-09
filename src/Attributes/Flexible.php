@@ -15,6 +15,5 @@ readonly class Flexible
 {
     public function __construct(
         public bool $enabled = true
-    ) {
-    }
+    ) {}
 }

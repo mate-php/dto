@@ -16,7 +16,7 @@ class UserDto extends Dto
 $data = [
     "firstName" => "John",
     "lastName" => "Doe",
-    "email" => "john.doe@example.com"
+    "email" => "john.doe@example.com",
 ];
 $dto = new UserDto($data);
 print_r($dto->toArray());

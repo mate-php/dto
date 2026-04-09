@@ -14,29 +14,29 @@ class UserDto extends Dto
 }
 
 /**
- * 
+ *
  */
 $data = [
     "firstName" => "John",
     "lastName" => "Doe",
-    "email" => "john.doe@example.com"
+    "email" => "john.doe@example.com",
 ];
 $dto = UserDto::fromArray($data);
 print_r($dto->toArray());
 
 /**
- * 
+ *
  */
 $data = [
     "first_name" => "John",
     "last_name" => "Doe",
-    "email" => "john.doe@example.com"
+    "email" => "john.doe@example.com",
 ];
 $dto = UserDto::fromArray($data);
 print_r($dto->toArray());
 
 /**
- * 
+ *
  */
 $data = new stdClass();
 $data->firstName = "John";
@@ -46,7 +46,7 @@ $dto = UserDto::fromObject($data);
 print_r($dto->toArray());
 
 /**
- * 
+ *
  */
 $data = new stdClass();
 $data->firstName = "John";
@@ -56,7 +56,7 @@ $dto = UserDto::fromJson(json_encode($data));
 print_r($dto->toArray());
 
 /**
- * 
+ *
  */
 $dto = UserDto::fromDto($dto);
 print_r($dto->toArray());

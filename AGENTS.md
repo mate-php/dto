@@ -1,6 +1,6 @@
 # MatePHP - DTO - Agent Instructions
 
-Usted es un experto en arquitectura de software especializado en PHP 8.4+ y entornos de alta concurrencia. Su objetivo es asistir en el desarrollo de la libreria DTO para el microframework **MatePHP**, priorizando la baja latencia y el rendimiento en entornos persistentes (Swoole).
+Usted es un experto en arquitectura de software especializado en PHP 8.4+ y entornos de alta concurrencia. Su objetivo es asistir en el desarrollo de librerias PHP agnosticas a framewokrs para ser utilizadas e importadas por cualquier otro proyecto PHP.
 
 ## Directivas Maestras (Mandatorias)
 
@@ -20,22 +20,13 @@ Usted es un experto en arquitectura de software especializado en PHP 8.4+ y ento
 Since MatePHP is designed for high-performance persistent environments, the agent must ensure memory safety and process isolation:
 
 1. **Stateless Core**: Prohibit the use of `global` variables or `static` properties for storing request-specific data. All state must be managed via the `Mate\Context\Context` class.
-2. **Boot-once vs Request-cycle**:
-   - **Boot-once**: Heavy dependencies (Container, Router, Config) should be initialized only once during the Server Start.
-   - **Request-cycle**: Controllers, Requests, and Responses must be fresh for every coroutine.
-3. **Coroutine Safety**: When performing I/O operations (DB, Filesystem, HTTP Clients), ensure compatibility with Swoole's Coroutine Hooks to prevent blocking the Event Loop.
-4. **Memory Leak Prevention**: Every service registered as a singleton must be audited for memory growth. Use `unset()` or `clear()` in the `finally` block of the request lifecycle if necessary.
-5. **Contextual Awareness**: Use `Swoole\Coroutine::getCid()` to differentiate between concurrent requests and ensure data isolation.
-
-### ❌ Anti-Pattern Example (Avoid):
-static $currentUser; // This will leak between different users in Swoole!
-
-### ✅ Correct Pattern (Use):
-Context::set('user', $user); // Isolated per Coroutine ID.
+2. **Coroutine Safety**: When performing I/O operations (DB, Filesystem, HTTP Clients), ensure compatibility with Swoole's Coroutine Hooks to prevent blocking the Event Loop.
+3. **Memory Leak Prevention**: Every service registered as a singleton must be audited for memory growth. Use `unset()` or `clear()` in the `finally` block of the request lifecycle if necessary.
+4. **Contextual Awareness**: Use `Swoole\Coroutine::getCid()` to differentiate between concurrent requests and ensure data isolation.
 
 ## ⚡ OPcache & Performance Optimization
 
-MatePHP is optimized for high-performance execution. The agent must generate code that maximizes OPcache efficiency and PHP's internal optimizations:
+This library is optimized for high-performance execution. The agent must generate code that maximizes OPcache efficiency and PHP's internal optimizations:
 
 1. **Strict Types & Static Analysis**: Always use `declare(strict_types=1);`. This allows OPcache and the JIT (Just-In-Time) compiler to make better assumptions about types, improving execution speed.
 2. **Preloading Compatibility**: Avoid dynamic code generation (like `eval()`) or complex runtime class aliases. Structure the core classes so they can be easily listed in a `preload.php` script for PHP 8.4.
@@ -104,11 +95,11 @@ Para mantener la consistencia en el núcleo del framework, el agente debe seguir
    - La estructura de carpetas debe seguir estrictamente el estándar **PSR-4**.
 
 ### Mapping de Directorios (Standard):
-- `src/<module_name>/Console/`: Comandos de consola.
-- `src/<module_name>/Contracts/`: Todas las Interfaces (Abstracciones).
-- `src/<module_name>/Exceptions/`: Excepciones personalizadas del framework.
-- `src/<module_name>/Traits/`: Traits personalizados del framework.
-- `src/<module_name>/`: Clases fundamentales del motor (Kernel, App).
+- `src/Console/`: Comandos de consola.
+- `src/Contracts/`: Todas las Interfaces (Abstracciones).
+- `src/Exceptions/`: Excepciones personalizadas.
+- `src/Traits/`: Traits personalizados.
+- `src/`: Clases fundamentales.
 - `src/Support/`: Clases de utilidad estáticas (Helper classes).
 
 ## Restricciones de Código

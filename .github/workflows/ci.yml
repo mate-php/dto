@@ -45,3 +45,4 @@ jobs:
 
       - name: Run Pest Tests with 100% Coverage
         run: vendor/bin/pest --coverage --min=100
+

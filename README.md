@@ -66,4 +66,10 @@ For advanced features like **Collections**, **Custom Mapping**, **Strict Mode**,
 
 ---
 
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details on our development workflow and commit message standards.
+
+---
+
 Made with ❤️ by the **MatePHP** Team.

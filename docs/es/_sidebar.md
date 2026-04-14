@@ -1,6 +1,7 @@
 - **Primeros Pasos**
   - [Vista General](/es/README.md)
   - [¿Qué es un DTO?](/es/dto.md)
+  - [Guía de Migración (v1 a v2)](/es/migration-v2.md)
 
 - **Guía de Uso**
   - [Instanciación](/es/instantiation.md)

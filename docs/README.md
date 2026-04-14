@@ -76,13 +76,4 @@ class OrderDto extends Dto
 
 ---
 
-## Exception System
-
-The library provides a robust exception hierarchy for better error handling:
-
-*   `Mate\Dto\Exceptions\InvalidDataException`: Thrown on type mismatches.
-*   `Mate\Dto\Exceptions\NotFlexibleException`: Thrown when unknown data is passed to a strict DTO.
-
----
-
 Made with ❤️ by the **MatePHP** Team.

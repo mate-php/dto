@@ -42,6 +42,12 @@
         "test": "pest",
         "lint": "vendor/bin/php-cs-fixer fix --dry-run --diff",
         "fix": "PHP_CS_FIXER_IGNORE_ENV=1 vendor/bin/php-cs-fixer fix",
-        "stan": "vendor/bin/phpstan analyse src"
+        "stan": "vendor/bin/phpstan analyse src",
+        "check-all": [
+            "@putenv COMPOSER_AUDIT_ABANDONED=fail",
+            "composer audit",
+            "composer stan",
+            "vendor/bin/pest"
+        ]
     }
 }

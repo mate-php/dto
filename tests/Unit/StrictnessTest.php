@@ -43,8 +43,3 @@ test('dto throws invalid data exception on type mismatch', function () {
 
     expect(fn() => new TypeStrictDto($data))->toThrow(InvalidDataException::class);
 });
-
-test('asymmetric visibility is supported (conceptual)', function () {
-    // This is a conceptual test as PHP version in environment must be 8.4+
-    // Since we are using Reflection to set values, it should work fine.
-});

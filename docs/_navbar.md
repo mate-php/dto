@@ -1,3 +1,2 @@
-- **Languages**
-  - [English](/)
-  - [Español](/es/)
+* [English](/en/)
+* [Español](/es/)

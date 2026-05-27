@@ -1,0 +1,331 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap');
+
+:root {
+    --theme-color: var(--accent, #7faecc);
+    --text-color-base: var(--textColor, #374151);
+    --text-color-heading: var(--textColor, #111827);
+    --sidebar-bg: var(--background, #f9fafb);
+    --sidebar-border: var(--borderColor, #e5e7eb);
+    --content-max-width: 800px;
+    --code-bg: var(--codeBackgroundColor, #1e293b);
+    --code-text: var(--codeTextColor, #f8fafc);
+    --link-color: var(--accent, #7faecc);
+    --link-hover: var(--accent, #6a95b3);
+    --bg-color: var(--background, #ffffff);
+}
+
+/* Base Styles */
+html {
+    scroll-behavior: smooth;
+}
+
+body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    color: var(--text-color-base);
+    background-color: var(--bg-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
+}
+
+/* Sidebar */
+.sidebar {
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--sidebar-border);
+    padding-top: 0;
+    transition: transform 0.3s ease;
+    z-index: 1001 !important; /* Above navbar */
+}
+
+.sidebar-nav {
+    padding: 20px 30px;
+}
+
+.sidebar-nav ul {
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.sidebar-nav li {
+    margin: 4px 0;
+}
+
+.sidebar-nav a {
+    color: var(--text-color-base);
+    font-size: 0.95rem;
+    font-weight: 500;
+    text-decoration: none;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    display: block;
+    padding: 8px 12px;
+    border-radius: 6px;
+}
+
+.sidebar-nav a:hover {
+    color: var(--link-color);
+    background-color: rgba(127, 174, 204, 0.08);
+    transform: translateX(4px);
+}
+
+.sidebar-nav li.active > a {
+    color: var(--link-color);
+    background-color: rgba(127, 174, 204, 0.12);
+    font-weight: 600;
+}
+
+.sidebar .sidebar-nav .active > a::after {
+    display: none;
+}
+
+/* Sidebar Toggle (Mobile) */
+.sidebar-toggle {
+    background: transparent;
+    bottom: 20px;
+    left: 20px;
+    width: 48px;
+    height: 48px;
+    padding: 12px;
+    background-color: var(--bg-color);
+    border-radius: 12px;
+    box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+    z-index: 1100;
+    transition: transform 0.2s;
+}
+
+.sidebar-toggle:hover {
+    transform: scale(1.05);
+}
+
+/* Content */
+.content {
+    padding-top: 60px;
+}
+
+.markdown-section {
+    max-width: var(--content-max-width);
+    margin: 0 auto;
+    padding: 40px 20px 60px;
+    animation: fadeIn 0.6s ease-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.markdown-section h1, 
+.markdown-section h2, 
+.markdown-section h3, 
+.markdown-section h4 {
+    color: var(--text-color-heading);
+    font-weight: 800;
+    margin-top: 3rem;
+    margin-bottom: 1.25rem;
+    letter-spacing: -0.025em;
+}
+
+.markdown-section h1 { font-size: 2.5rem; border-bottom: none; }
+.markdown-section h2 { font-size: 1.875rem; border-bottom: none; }
+.markdown-section h3 { font-size: 1.5rem; }
+
+.markdown-section a {
+    color: var(--link-color);
+    font-weight: 600;
+    text-decoration: none;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s;
+}
+
+.markdown-section a:hover {
+    border-bottom-color: var(--link-color);
+    opacity: 0.8;
+}
+
+.markdown-section blockquote {
+    border-left: 4px solid var(--link-color);
+    background-color: rgba(127, 174, 204, 0.05);
+    padding: 1.25rem 1.75rem;
+    margin: 2.5rem 0;
+    border-radius: 0 12px 12px 0;
+    color: var(--text-color-base);
+    font-style: italic;
+}
+
+/* Code Blocks */
+.markdown-section pre {
+    background-color: var(--code-bg) !important;
+    border-radius: 16px;
+    padding: 1.75rem;
+    margin: 2rem 0;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    border: 1px solid rgba(255, 255, 255, 0.05);
+    transition: transform 0.3s;
+}
+
+.markdown-section pre:hover {
+    transform: translateY(-2px);
+}
+
+.markdown-section code {
+    font-family: 'JetBrains Mono', 'Fira Code', monospace;
+    font-size: 0.875rem;
+}
+
+/* Inline Code */
+.markdown-section :not(pre) > code {
+    background-color: rgba(127, 174, 204, 0.1);
+    color: var(--link-color);
+    padding: 2px 8px;
+    border-radius: 6px;
+    font-weight: 600;
+}
+
+/* Search bar */
+.search {
+    border-bottom: 1px solid var(--sidebar-border) !important;
+    padding: 24px !important;
+    position: relative;
+    z-index: 1002;
+}
+
+.search input {
+    background-color: var(--bg-color) !important;
+    border: 1px solid var(--sidebar-border) !important;
+    border-radius: 10px !important;
+    padding: 12px 16px !important;
+    font-family: 'Inter', sans-serif !important;
+    font-size: 0.9rem !important;
+    transition: all 0.2s !important;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05) !important;
+    color: var(--text-color-base) !important;
+}
+
+.search input:focus {
+    outline: none !important;
+    border-color: var(--link-color) !important;
+    box-shadow: 0 0 0 4px rgba(127, 174, 204, 0.15) !important;
+}
+
+/* Navbar (Glassmorphism) */
+.app-nav {
+    position: fixed;
+    margin: 0;
+    padding: 15px 50px 15px 0;
+    left: 300px; /* Offset for sidebar */
+    width: calc(100% - 300px);
+    background-color: color-mix(in srgb, var(--bg-color) 70%, transparent);
+    backdrop-filter: blur(12px) saturate(180%);
+    -webkit-backdrop-filter: blur(12px) saturate(180%);
+    border-bottom: 1px solid color-mix(in srgb, var(--text-color-base) 15%, transparent);
+    z-index: 1000;
+    text-align: right;
+    top: 0;
+    transition: background-color 0.3s, border-color 0.3s;
+    box-sizing: border-box;
+}
+
+@media screen and (max-width: 768px) {
+    .app-nav {
+        left: 0;
+        width: 100%;
+        padding-left: 20px;
+    }
+}
+
+.app-nav a {
+    color: var(--text-color-base);
+    font-weight: 600;
+    margin-left: 24px;
+    transition: color 0.2s;
+    font-size: 0.9rem;
+}
+
+.app-nav a:hover {
+    color: var(--link-color);
+}
+
+.app-nav a.active {
+    color: var(--link-color);
+}
+
+/* Theme Toggle Plugin Styling */
+#docsify-darklight-theme {
+    top: 18px !important;
+    right: 20px !important;
+    width: 28px !important;
+    height: 28px !important;
+    background-size: contain !important;
+    z-index: 2001 !important;
+    opacity: 0.8;
+    transition: opacity 0.2s, transform 0.2s;
+    cursor: pointer;
+}
+
+#docsify-darklight-theme:hover {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* Ensure GitHub Corner is visible */
+.github-corner {
+    z-index: 2002 !important;
+}
+
+/* Logo */
+.sidebar .app-name-link img {
+    width: 120px;
+    margin: 0 auto;
+    display: block;
+    padding-top: 10px;
+}
+
+.sidebar .app-name {
+    text-align: center;
+    margin: 10px 0;
+}
+
+/* Pagination */
+.docsify-pagination-container {
+    border-top: 1px solid var(--sidebar-border) !important;
+    padding-top: 2rem !important;
+    margin-top: 4rem !important;
+}
+
+.pagination-item-title {
+    color: var(--link-color) !important;
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+    background: var(--sidebar-border);
+    border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af;
+}
+
+/* Responsive fixes */
+@media screen and (max-width: 768px) {
+    .app-nav {
+        width: 100%;
+        padding-right: 20px;
+    }
+    .sidebar {
+        left: -300px;
+        transition: left 0.2s;
+    }
+    body.close .sidebar {
+        left: 0;
+    }
+}

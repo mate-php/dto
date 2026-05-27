@@ -37,3 +37,6 @@ composer.phar
 ### OS Specific ###
 .DS_Store
 Thumbs.db
+
+### DEVTOOLS ###
+.devtool/

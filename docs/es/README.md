@@ -1,23 +1,23 @@
 # MatePHP - DTO Library
 
-> Librería de Objetos de Transferencia de Datos (DTO) de alto rendimiento, baja latencia y moderna para **PHP 8.4+**. **Agnóstica a frameworks** por diseño.
+> Librería de **Objetos de Transferencia de Datos (DTO)** de alto rendimiento, baja latencia y moderna para **PHP 8.4+**. **Agnóstica a frameworks** por diseño, optimizada para Swoole y entornos de alta concurrencia.
 
-[![Repo](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/mate-php/dto)
-[![Latest Stable Version](https://img.shields.io/packagist/v/matephp/dto)](https://packagist.org/packages/matephp/dto)
-[![Unstable Version](https://img.shields.io/badge/unstable-dev--main-orange)](https://github.com/mate-php/dto)
-[![PHP Version](https://img.shields.io/badge/php-8.4%2B-indigo.svg)](https://github.com/mate-php/dto/blob/main/composer.json)
-[![Total Downloads](https://img.shields.io/packagist/dt/matephp/dto)](https://packagist.org/packages/matephp/dto)
-[![License](https://img.shields.io/packagist/l/matephp/dto)](https://github.com/mate-php/dto/blob/main/LICENSE)
-[![Hits-of-Code](https://hitsofcode.com/github/mate-php/dto?branch=main)](https://hitsofcode.com/github/mate-php/dto/json?branch=main)
-[![Coverage](https://img.shields.io/badge/coverage-100%25-green.svg)](https://github.com/mate-php/dto/tree/main/tests)
+[![Repo GitHub de MatePHP DTO](https://img.shields.io/badge/github-gray?logo=github)](https://github.com/mate-php/dto)
+[![Versión Estable de MatePHP DTO](https://img.shields.io/packagist/v/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![Versión Inestable de MatePHP DTO](https://img.shields.io/badge/unstable-dev--main-orange)](https://github.com/mate-php/dto)
+[![Soporte de Versión PHP de MatePHP DTO](https://img.shields.io/badge/php-8.4%2B-indigo.svg)](https://github.com/mate-php/dto/blob/main/composer.json)
+[![Descargas Totales de MatePHP DTO](https://img.shields.io/packagist/dt/matephp/dto)](https://packagist.org/packages/matephp/dto)
+[![Licencia de MatePHP DTO](https://img.shields.io/packagist/l/matephp/dto)](https://github.com/mate-php/dto/blob/main/LICENSE)
+[![Hits-of-Code de MatePHP DTO](https://hitsofcode.com/github/mate-php/dto?branch=main)](https://hitsofcode.com/github/mate-php/dto/json?branch=main)
+[![Cobertura de Tests de MatePHP DTO](https://img.shields.io/badge/coverage-100%25-green.svg)](https://github.com/mate-php/dto/tree/main/tests)
 
 ---
 
-## Vista General
+## Resumen (Overview)
 
 **Mate/dto** es un componente ligero y sin dependencias diseñado para ser **completamente agnóstico a frameworks**. Utiliza las características más modernas de PHP 8.4 para ofrecer una API amigable para el desarrollador con el máximo rendimiento.
 
-### Características Principales
+## Características Principales
 
 *   **⚡ Alto Rendimiento**: Motor de mapeo optimizado con caché de metadatos.
 *   **💎 Soporte PHP 8.4**: Soporte nativo para **Visibilidad Asimétrica** (`public private(set)`) y Promoción de Propiedades.
@@ -25,15 +25,11 @@
 *   **🛠️ Flexible y Estricto**: Elige entre validación estricta o mapeo flexible de datos mediante atributos.
 *   **📦 Cero Redundancia**: Lógica de instanciación optimizada para minimizar la sobrecarga.
 
----
-
 ## Instalación
 
 ```bash
 composer require mate-php/dto
 ```
-
----
 
 ## Quick Start
 
